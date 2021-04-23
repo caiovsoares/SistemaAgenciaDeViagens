@@ -154,6 +154,11 @@ public class TransporteView extends javax.swing.JFrame {
         codigoField.setEnabled(false);
 
         veiculoOption.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Avião", "Ônibus" }));
+        veiculoOption.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                veiculoOptionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout dadosPanelLayout = new javax.swing.GroupLayout(dadosPanel);
         dadosPanel.setLayout(dadosPanelLayout);
@@ -320,8 +325,8 @@ public class TransporteView extends javax.swing.JFrame {
             for(int i = 0; i < veiculoOption.getItemCount(); i++){
                 if(veiculoOption.getItemAt(i) == modelo.getValueAt(selectedRow,2).toString()){
                     veiculoOption.setSelectedIndex(i);
-            }   
-        }
+                }   
+            }
             
             
             dadosPanel.setVisible(true);
@@ -355,6 +360,10 @@ public class TransporteView extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_excluirButtonActionPerformed
+
+    private void veiculoOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_veiculoOptionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_veiculoOptionActionPerformed
 
     
     

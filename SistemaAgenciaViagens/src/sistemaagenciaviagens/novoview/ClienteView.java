@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sistemaagenciaviagens.controller.ClienteController;
+import sistemaagenciaviagens.controller.PlanoController;
+import sistemaagenciaviagens.model.PlanoModel;
 
 /**
  *
@@ -18,11 +20,25 @@ import sistemaagenciaviagens.controller.ClienteController;
 public class ClienteView extends javax.swing.JFrame {
 
     private ClienteController controlador;
+    private PlanoController planoController;
     
     public ClienteView() {
+
         this.controlador = new ClienteController();
         initComponents();
         dadosPanel.setVisible(false);
+        
+        //alimentando o ComboBox
+        this.planoController = new PlanoController();
+        planoController.buscarTodos();
+        //NÃO DEVERIAMOS IMPORTAR PLANO MODEL NA VIEW, O CORRETO SERIA TRAZER UMA LISTA DE STRINGS PELO CONTROLLER OU ALGO SEMELHANTE
+        //ESSE FOR SERVE APENAS PARA QUE POSSAMOS LISTAR TODOS OS PLANOS NO VIEW
+        for(PlanoModel plano : planoController.getListaDePlanos())
+        {
+            planoComboBox.addItem(String.valueOf(plano.getCodigo()));
+        }
+        
+        
     }
     
     /**
@@ -66,6 +82,10 @@ public class ClienteView extends javax.swing.JFrame {
         cancelarButton = new javax.swing.JButton();
         codigoLabel = new javax.swing.JLabel();
         codigoField = new javax.swing.JTextField();
+        nascimentoLabel = new javax.swing.JLabel();
+        nascimentoField = new javax.swing.JTextField();
+        cpfLabel2 = new javax.swing.JLabel();
+        planoComboBox = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         dadosTable = new javax.swing.JTable();
 
@@ -191,6 +211,10 @@ public class ClienteView extends javax.swing.JFrame {
 
         codigoField.setEnabled(false);
 
+        nascimentoLabel.setText("*Data de Nascimento: ");
+
+        cpfLabel2.setText("*Plano: ");
+
         javax.swing.GroupLayout dadosPanelLayout = new javax.swing.GroupLayout(dadosPanel);
         dadosPanel.setLayout(dadosPanelLayout);
         dadosPanelLayout.setHorizontalGroup(
@@ -199,18 +223,33 @@ public class ClienteView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, dadosPanelLayout.createSequentialGroup()
-                        .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(numeroLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ruaLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(bairroLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cidadeLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(estadoLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cepLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(nomeLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(telefoneLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(codigoLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(36, 36, 36)
+                        .addComponent(cancelarButton, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(salvarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, dadosPanelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(cpfLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(planoComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, dadosPanelLayout.createSequentialGroup()
                         .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(numeroLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ruaLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(bairroLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cidadeLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(estadoLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cepLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(nomeLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(telefoneLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(codigoLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(rgLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cpfLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cpfField)
+                            .addComponent(rgField)
                             .addComponent(nomeField)
                             .addComponent(telefoneField)
                             .addComponent(cepField)
@@ -220,20 +259,10 @@ public class ClienteView extends javax.swing.JFrame {
                             .addComponent(ruaField)
                             .addComponent(numeroField)
                             .addComponent(codigoField)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, dadosPanelLayout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(cancelarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(dadosPanelLayout.createSequentialGroup()
+                        .addComponent(nascimentoLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(salvarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, dadosPanelLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cpfLabel)
-                            .addComponent(rgLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cpfField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(rgField))))
+                        .addComponent(nascimentoField)))
                 .addContainerGap())
         );
         dadosPanelLayout.setVerticalGroup(
@@ -283,6 +312,14 @@ public class ClienteView extends javax.swing.JFrame {
                 .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cpfField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cpfLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nascimentoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nascimentoLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cpfLabel2)
+                    .addComponent(planoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cancelarButton, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
@@ -335,7 +372,7 @@ public class ClienteView extends javax.swing.JFrame {
                     .addComponent(dadosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(menuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -362,21 +399,20 @@ public class ClienteView extends javax.swing.JFrame {
         String bairro = bairroField.getText();
         String rua = ruaField.getText();
         String numero = numeroField.getText();
-        // Funcionario
+        // Cliente
         String rg = rgField.getText();
         String cpf = cpfField.getText();
-        
+        String dataNascimento = nascimentoField.getText();
+        this.controlador.buscaPlanoCodigo(Integer.parseInt(planoComboBox.getItemAt(planoComboBox.getSelectedIndex())));
         
         
         if(!((nome.equals("")) || (telefone.equals("")) || (cep.equals("")) ||
           (estado.equals("")) || (cidade.equals("")) || (bairro.equals("")) || 
-          (rua.equals("")) || (numero.equals("")) || (rg.equals("")) || (cpf.equals(""))))
+          (rua.equals("")) || (numero.equals("")) || (rg.equals("")) || (cpf.equals("")) || (dataNascimento.equals(""))))
         {
             try {
-                
-                //                                                                                                    <<<<<<AQUI
-             //   this.controlador.salvar(codigo, nome, telefone, cep, estado, cidade, bairro,
-             //   rua, numero, rg, cpf, );
+                this.controlador.salvar(codigo, nome, telefone, cep, estado, cidade, bairro,
+                rua, numero, rg, cpf, dataNascimento, this.controlador.getPlano() );
                 JOptionPane.showMessageDialog(rootPane, "Cliente Salvo com sucesso!");
                 dadosPanel.setVisible(false);
                 limparDados();
@@ -429,6 +465,15 @@ public class ClienteView extends javax.swing.JFrame {
             numeroField.setText(modelo.getValueAt(selectedRow, 8).toString());
             rgField.setText(modelo.getValueAt(selectedRow, 9).toString());
             cpfField.setText(modelo.getValueAt(selectedRow, 10).toString());
+            nascimentoField.setText(modelo.getValueAt(selectedRow, 11).toString());
+            for(int i = 0; i < planoComboBox.getItemCount(); i++){
+                if(planoComboBox.getItemAt(i) == modelo.getValueAt(selectedRow,12).toString()){
+                    planoComboBox.setSelectedIndex(i);
+                }   
+            }
+            
+            planoComboBox.setSelectedIndex(WIDTH);
+            
             dadosPanel.setVisible(true);
         }
         else
@@ -555,6 +600,7 @@ public class ClienteView extends javax.swing.JFrame {
     private javax.swing.JLabel codigoLabel;
     private javax.swing.JTextField cpfField;
     private javax.swing.JLabel cpfLabel;
+    private javax.swing.JLabel cpfLabel2;
     private javax.swing.JPanel dadosPanel;
     private javax.swing.JTable dadosTable;
     private javax.swing.JTextField estadoField;
@@ -564,10 +610,13 @@ public class ClienteView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton listarButton;
     private javax.swing.JPanel menuPanel;
+    private javax.swing.JTextField nascimentoField;
+    private javax.swing.JLabel nascimentoLabel;
     private javax.swing.JTextField nomeField;
     private javax.swing.JLabel nomeLabel;
     private javax.swing.JTextField numeroField;
     private javax.swing.JLabel numeroLabel;
+    private javax.swing.JComboBox<String> planoComboBox;
     private javax.swing.JTextField rgField;
     private javax.swing.JLabel rgLabel;
     private javax.swing.JTextField ruaField;

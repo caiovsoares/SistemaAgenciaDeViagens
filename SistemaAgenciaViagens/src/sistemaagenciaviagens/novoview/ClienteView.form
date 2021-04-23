@@ -52,7 +52,7 @@
                   <Component id="menuPanel" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="231" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="177" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -170,19 +170,37 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="numeroLabel" alignment="0" max="32767" attributes="0"/>
-                              <Component id="ruaLabel" alignment="0" max="32767" attributes="0"/>
-                              <Component id="bairroLabel" alignment="0" max="32767" attributes="0"/>
-                              <Component id="cidadeLabel" alignment="0" max="32767" attributes="0"/>
-                              <Component id="estadoLabel" alignment="0" max="32767" attributes="0"/>
-                              <Component id="cepLabel" alignment="0" max="32767" attributes="0"/>
-                              <Component id="nomeLabel" alignment="0" max="32767" attributes="0"/>
-                              <Component id="telefoneLabel" alignment="0" max="32767" attributes="0"/>
-                              <Component id="codigoLabel" alignment="0" max="32767" attributes="0"/>
-                          </Group>
+                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                          <Component id="cancelarButton" pref="147" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="salvarButton" min="-2" pref="93" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <Component id="cpfLabel2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="planoComboBox" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="numeroLabel" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="ruaLabel" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="bairroLabel" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="cidadeLabel" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="estadoLabel" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="cepLabel" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="nomeLabel" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="telefoneLabel" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="codigoLabel" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="rgLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="cpfLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="cpfField" max="32767" attributes="0"/>
+                              <Component id="rgField" max="32767" attributes="0"/>
                               <Component id="nomeField" max="32767" attributes="0"/>
                               <Component id="telefoneField" max="32767" attributes="0"/>
                               <Component id="cepField" max="32767" attributes="0"/>
@@ -194,23 +212,10 @@
                               <Component id="codigoField" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                          <Component id="cancelarButton" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="nascimentoLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="salvarButton" min="-2" pref="93" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="cpfLabel" min="-2" max="-2" attributes="0"/>
-                              <Component id="rgLabel" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="cpfField" alignment="1" max="32767" attributes="0"/>
-                              <Component id="rgField" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="nascimentoField" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -274,6 +279,16 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="cpfField" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cpfLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="nascimentoField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="nascimentoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="cpfLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="planoComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -390,6 +405,28 @@
           <Properties>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="nascimentoLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="*Data de Nascimento: "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="nascimentoField">
+        </Component>
+        <Component class="javax.swing.JLabel" name="cpfLabel2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="*Plano: "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="planoComboBox">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

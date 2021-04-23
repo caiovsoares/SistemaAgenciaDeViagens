@@ -1,0 +1,8 @@
+Atenção.
+Sempre que for upar o projeto colocar as considerações finais aqui para quem for continuar!!!
+
+I - Todas as telas foram feitas
+
+II - Plano de viagem está salvando os objetos inteiros ao invés de somente a informação necessária
+
+III - Cliente não salva, erro: "String index out of range: 2"
