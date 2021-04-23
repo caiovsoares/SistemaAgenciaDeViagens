@@ -195,7 +195,7 @@ public class TransporteView {
     * Lista todos os Transportes que foram cadastrados chamando o controlador
     */
     private void lista() {
-        this.controlador.buscaTodos();
+        this.controlador.buscarTodos();
       
         for(int i = 0; i < this.controlador.getListaTransporte().size(); i++){          
             System.out.print("\n--------------------------------------------\n");

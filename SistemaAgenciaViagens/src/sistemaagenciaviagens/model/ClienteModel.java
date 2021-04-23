@@ -213,5 +213,13 @@ public class ClienteModel extends PessoaModel implements Serializable{
         
         return false;
     }
+
+    public Object getrg() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Object getcpf() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

@@ -50,7 +50,7 @@ public class TransporteController {
         this.transporte = (TransporteModel) object;
     }
 
-    public void buscaTodos() {
+    public void buscarTodos() {
         this.listaTransporte = new ArrayList<TransporteModel>();
 
         for (Object o : this.db.buscarTodos()) {
