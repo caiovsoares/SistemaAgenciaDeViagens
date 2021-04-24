@@ -424,6 +424,9 @@
               <StringArray count="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="planoComboBoxActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -440,7 +443,7 @@
         <Component class="javax.swing.JTable" name="dadosTable">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="11" rowCount="0">
+              <Table columnCount="13" rowCount="0">
                 <Column editable="false" title="C&#xf3;digo" type="java.lang.Object"/>
                 <Column editable="false" title="Nome" type="java.lang.Object"/>
                 <Column editable="false" title="Telefone" type="java.lang.Object"/>
@@ -452,6 +455,8 @@
                 <Column editable="false" title="Numero" type="java.lang.Object"/>
                 <Column editable="false" title="RG" type="java.lang.Object"/>
                 <Column editable="false" title="CPF" type="java.lang.Object"/>
+                <Column editable="false" title="Data de Nascimento" type="java.lang.Object"/>
+                <Column editable="false" title="Plano" type="java.lang.Object"/>
               </Table>
             </Property>
           </Properties>

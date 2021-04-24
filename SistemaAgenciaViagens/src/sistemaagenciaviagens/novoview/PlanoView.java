@@ -28,7 +28,7 @@ public class PlanoView extends javax.swing.JFrame {
     private FuncionarioController funcionarioController;
     private LocalController localController;
     private HotelController hotelController;
-    private TransporteController transporteCcontroller;
+    private TransporteController transporteController;
     
     
     private PlanoController controlador;
@@ -49,8 +49,8 @@ public class PlanoView extends javax.swing.JFrame {
         localController.buscarTodos();
         this.hotelController = new HotelController();
         hotelController.buscaTodos();
-        this.transporteCcontroller = new TransporteController();
-        transporteCcontroller.buscarTodos();
+        this.transporteController = new TransporteController();
+        transporteController.buscarTodos();
         
         //NÃO DEVERIAMOS IMPORTAR PLANO MODEL NA VIEW, O CORRETO SERIA TRAZER UMA LISTA DE STRINGS PELO CONTROLLER OU ALGO SEMELHANTE
         //ESSE FOR SERVE APENAS PARA QUE POSSAMOS LISTAR TODOS OS PLANOS NO VIEW
@@ -66,7 +66,7 @@ public class PlanoView extends javax.swing.JFrame {
         {
             hotelComboBox.addItem(String.valueOf(hotel.getCodigo()));
         }
-        for(TransporteModel transporte : transporteCcontroller.getListaTransporte())
+        for(TransporteModel transporte : transporteController.getListaTransporte())
         {
             transporteComboBox.addItem(String.valueOf(transporte.getCodigo()));
         }
@@ -570,14 +570,12 @@ public class PlanoView extends javax.swing.JFrame {
             ((DefaultTableModel) dadosTable.getModel()).addRow(new Object[]{
                 this.controlador.getListaDePlanos().get(i).getCodigo(),
                 this.controlador.getListaDePlanos().get(i).getValor(),
-                this.controlador.getListaDePlanos().get(i).getDataIda(),
-                this.controlador.getListaDePlanos().get(i).getDataVolta(),
-                this.controlador.getListaDePlanos().get(i).getFuncionario(),
-                this.controlador.getListaDePlanos().get(i).getLocal(), //                                     AQUI
-                this.controlador.getListaDePlanos().get(i).getHotel(),
-                this.controlador.getListaDePlanos().get(i).getTransporte()
-                
-                
+                sdf.format(this.controlador.getListaDePlanos().get(i).getDataIda().getTime()),
+                sdf.format(this.controlador.getListaDePlanos().get(i).getDataVolta().getTime()),
+                this.controlador.getListaDePlanos().get(i).getFuncionario().getCodigo(),
+                this.controlador.getListaDePlanos().get(i).getLocal().getCepDestino(),
+                this.controlador.getListaDePlanos().get(i).getHotel().getCodigo(),
+                this.controlador.getListaDePlanos().get(i).getTransporte().getCodigo()
                 });
             
         }

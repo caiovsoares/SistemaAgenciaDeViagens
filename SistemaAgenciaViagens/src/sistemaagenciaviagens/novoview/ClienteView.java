@@ -6,7 +6,6 @@
 package sistemaagenciaviagens.novoview;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sistemaagenciaviagens.controller.ClienteController;
@@ -215,6 +214,12 @@ public class ClienteView extends javax.swing.JFrame {
 
         cpfLabel2.setText("*Plano: ");
 
+        planoComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                planoComboBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout dadosPanelLayout = new javax.swing.GroupLayout(dadosPanel);
         dadosPanel.setLayout(dadosPanelLayout);
         dadosPanelLayout.setHorizontalGroup(
@@ -332,11 +337,11 @@ public class ClienteView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Nome", "Telefone", "CEP", "Estado", "Cidade", "Bairro", "Rua", "Numero", "RG", "CPF"
+                "Código", "Nome", "Telefone", "CEP", "Estado", "Cidade", "Bairro", "Rua", "Numero", "RG", "CPF", "Data de Nascimento", "Plano"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -408,22 +413,22 @@ public class ClienteView extends javax.swing.JFrame {
         
         if(!((nome.equals("")) || (telefone.equals("")) || (cep.equals("")) ||
           (estado.equals("")) || (cidade.equals("")) || (bairro.equals("")) || 
-          (rua.equals("")) || (numero.equals("")) || (rg.equals("")) || (cpf.equals("")) || (dataNascimento.equals(""))))
+          (rua.equals("")) || (numero.equals("")) || (rg.length() < 9) || (cpf.length() < 11) || (dataNascimento.equals(""))))
         {
             try {
-                this.controlador.salvar(codigo, nome, telefone, cep, estado, cidade, bairro,
-                rua, numero, rg, cpf, dataNascimento, this.controlador.getPlano() );
+                this.controlador.salvar(codigo, nome, telefone, cep, estado, cidade, bairro,rua, numero, rg, cpf, dataNascimento, this.controlador.getPlano());
                 JOptionPane.showMessageDialog(rootPane, "Cliente Salvo com sucesso!");
                 dadosPanel.setVisible(false);
                 limparDados();
                 atualizarTabela();
-            } catch (Exception ex) {
+            } catch (Exception ex) {;
                 JOptionPane.showMessageDialog(rootPane, ex.getMessage());
             }
         }
         else
         {
             JOptionPane.showMessageDialog(rootPane, "Campos com '*' são obrigatórios!");
+            JOptionPane.showMessageDialog(rootPane, "Verifique se o RG e o CPF são válidos!");
         }
         
     }//GEN-LAST:event_salvarButtonActionPerformed
@@ -506,6 +511,10 @@ public class ClienteView extends javax.swing.JFrame {
         
     }//GEN-LAST:event_excluirButtonActionPerformed
 
+    private void planoComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planoComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_planoComboBoxActionPerformed
+
     
     
     /**
@@ -579,11 +588,16 @@ public class ClienteView extends javax.swing.JFrame {
                 this.controlador.getListaDeClientes().get(i).getRua(),
                 this.controlador.getListaDeClientes().get(i).getNumero(),
                 this.controlador.getListaDeClientes().get(i).getRg(),
-                this.controlador.getListaDeClientes().get(i).getcpf()
-                //                                                                                                   TALVEZ NA LINHA DE CIMA
+                this.controlador.getListaDeClientes().get(i).getCpf(),
+                sdf.format(this.controlador.getListaDeClientes().get(i).getDataNascimento().getTime()),
+                this.controlador.getListaDeClientes().get(i).getPlano().getCodigo()
                 });
             
         }
+    }
+    
+    private void contarCaracteres(String s){
+        
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

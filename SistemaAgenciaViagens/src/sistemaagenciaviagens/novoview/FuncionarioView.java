@@ -430,7 +430,7 @@ public class FuncionarioView extends javax.swing.JFrame {
             demissaoField.setText(
                     modelo.getValueAt(selectedRow, 10).toString() == "funcionário ativo" ?
                             "" : modelo.getValueAt(selectedRow, 10).toString()
-            );
+            );            
             
             dadosPanel.setVisible(true);
         }
