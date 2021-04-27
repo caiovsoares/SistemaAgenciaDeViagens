@@ -1,400 +1,616 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package sistemaagenciaviagens.view;
 
 import java.text.SimpleDateFormat;
-import java.util.Scanner;
-
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import sistemaagenciaviagens.controller.FuncionarioController;
+import sistemaagenciaviagens.controller.HotelController;
+import sistemaagenciaviagens.controller.LocalController;
 import sistemaagenciaviagens.controller.PlanoController;
+import sistemaagenciaviagens.controller.TransporteController;
+import sistemaagenciaviagens.model.FuncionarioModel;
+import sistemaagenciaviagens.model.HotelModel;
+import sistemaagenciaviagens.model.LocalModel;
+import sistemaagenciaviagens.model.TransporteModel;
 
-public class PlanoView {
+/**
+ *
+ * @author Caio
+ */
+public class PlanoView extends javax.swing.JFrame {
 
+    private FuncionarioController funcionarioController;
+    private LocalController localController;
+    private HotelController hotelController;
+    private TransporteController transporteController;
+    
+    
     private PlanoController controlador;
     
-    /**
-     * Método Construtor de PlanoView:
-     *
-     * Chama o Menu de Plano e instancia um controlador
-     */
+    
+    
     public PlanoView() {
+
         this.controlador = new PlanoController();
-
-        this.menu();
-    }
-
-    /**
-     * Menu de Plano:
-     *
-     * Será utilizado para escolher as opcoes de cadastrar, alterar, listar ou
-     * excluir um Plano
-     */
-    private void menu() {
-
-        Scanner s = new Scanner(System.in);
-
-        int opc = 0;
-
-        do {
-            System.out.println("\n\n---MENU DE PLANO DE VIAGEM---");
-            System.out.println("1 - Cadastrar Novo Plano");
-            System.out.println("2 - Alterar Plano");
-            System.out.println("3 - Listar Todos os Planos");
-            System.out.println("4 - Excluir Plano");
-            System.out.println("0 - Voltar");
-
-            System.out.print("\nSelecionar opção: ");
-            opc = Integer.parseInt(s.nextLine());
-
-            switch (opc) {
-                case 0: {
-                    break;
-                }
-                case 1: {
-                    this.novo();
-                    break;
-                }
-                case 2: {
-                    this.altera();
-                    break;
-                }
-                case 3: {
-                    this.lista();
-                    break;
-                }
-                case 4: {
-                    this.excluir();
-                    break;
-                }
-
-            }
-        } while (opc != 0);
-    }
-
-    /**
-     * Método novo:
-     *
-     * Cria um novo Plano e envia todos os atributos para o controlador
-     */
-    private void novo() {
-
-        Scanner s = new Scanner(System.in);
-
-        double valor = 0.0;
-        String dataIda = "";
-        String dataVolta = "";
-
-        int codigoCliente = 0;
-        int codigoFuncionario = 0;
-        int cepLocal = 0;
-        int codigoHotel = 0;
-        int codigoTransporte = 0;
+        initComponents();
+        dadosPanel.setVisible(false);
         
-        do {
-            if(valor == 0){
-                System.out.println("Valor do Plano: ");
-                valor = Double.parseDouble(s.nextLine());
-            }
+                
+       //alimentando o ComboBox
+        this.funcionarioController = new FuncionarioController();
+        funcionarioController.buscarTodos();
+        this.localController = new LocalController();
+        localController.buscarTodos();
+        this.hotelController = new HotelController();
+        hotelController.buscaTodos();
+        this.transporteController = new TransporteController();
+        transporteController.buscarTodos();
+        
+        //NÃO DEVERIAMOS IMPORTAR PLANO MODEL NA VIEW, O CORRETO SERIA TRAZER UMA LISTA DE STRINGS PELO CONTROLLER OU ALGO SEMELHANTE
+        //ESSE FOR SERVE APENAS PARA QUE POSSAMOS LISTAR TODOS OS PLANOS NO VIEW
+        for(FuncionarioModel funcionario : funcionarioController.getListaDeFuncionarios())
+        {
+            funcionarioComboBox.addItem(String.valueOf(funcionario.getCodigo()));
+        }
+        for(LocalModel local : localController.getListaDeLocais())
+        {
+            cepComboBox.addItem(String.valueOf(local.getCepDestino()));
+        }
+        for(HotelModel hotel : hotelController.getListaHotel())
+        {
+            hotelComboBox.addItem(String.valueOf(hotel.getCodigo()));
+        }
+        for(TransporteModel transporte : transporteController.getListaTransporte())
+        {
+            transporteComboBox.addItem(String.valueOf(transporte.getCodigo()));
+        }
+        
+        
+    }
+    
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-            if(dataIda.equals("")){
-                System.out.println("Data de Ida: ");
-                dataIda = s.nextLine();
+        jLabel1 = new javax.swing.JLabel();
+        menuPanel = new javax.swing.JPanel();
+        cadastrarButton = new javax.swing.JButton();
+        alterarButton = new javax.swing.JButton();
+        listarButton = new javax.swing.JButton();
+        excluirButton = new javax.swing.JButton();
+        sairButton = new javax.swing.JButton();
+        dadosPanel = new javax.swing.JPanel();
+        valorLabel = new javax.swing.JLabel();
+        idaLabel = new javax.swing.JLabel();
+        voltaLabel = new javax.swing.JLabel();
+        funcionarioLabel = new javax.swing.JLabel();
+        cepLabel = new javax.swing.JLabel();
+        hotelLabel = new javax.swing.JLabel();
+        transporteLabel = new javax.swing.JLabel();
+        valorField = new javax.swing.JTextField();
+        idaField = new javax.swing.JTextField();
+        voltaField = new javax.swing.JTextField();
+        salvarButton = new javax.swing.JButton();
+        cancelarButton = new javax.swing.JButton();
+        codigoLabel = new javax.swing.JLabel();
+        codigoField = new javax.swing.JTextField();
+        funcionarioComboBox = new javax.swing.JComboBox<>();
+        cepComboBox = new javax.swing.JComboBox<>();
+        hotelComboBox = new javax.swing.JComboBox<>();
+        transporteComboBox = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        dadosTable = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Plano");
+
+        menuPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        cadastrarButton.setText("Cadastrar novo Plano");
+        cadastrarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadastrarButtonActionPerformed(evt);
+            }
+        });
+
+        alterarButton.setText("Alterar Plano");
+        alterarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                alterarButtonActionPerformed(evt);
+            }
+        });
+
+        listarButton.setText("Listar Todos os Planos");
+        listarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listarButtonActionPerformed(evt);
+            }
+        });
+
+        excluirButton.setText("Excluir Plano");
+        excluirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                excluirButtonActionPerformed(evt);
+            }
+        });
+
+        sairButton.setText("Sair");
+        sairButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sairButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
+        menuPanel.setLayout(menuPanelLayout);
+        menuPanelLayout.setHorizontalGroup(
+            menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cadastrarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(alterarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(listarButton, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+                    .addComponent(excluirButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(sairButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        menuPanelLayout.setVerticalGroup(
+            menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cadastrarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(alterarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(listarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(excluirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(sairButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        dadosPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        valorLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        valorLabel.setText("*Valor: ");
+
+        idaLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        idaLabel.setText("*Dt. Ida: ");
+
+        voltaLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        voltaLabel.setText("*Dt. Volta: ");
+
+        funcionarioLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        funcionarioLabel.setText("*Funcionário: ");
+
+        cepLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        cepLabel.setText("*CEP do Local: ");
+
+        hotelLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        hotelLabel.setText("*Hotel: ");
+
+        transporteLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        transporteLabel.setText("*Transporte: ");
+
+        salvarButton.setText("Salvar");
+        salvarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvarButtonActionPerformed(evt);
+            }
+        });
+
+        cancelarButton.setText("Cancelar");
+        cancelarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarButtonActionPerformed(evt);
+            }
+        });
+
+        codigoLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        codigoLabel.setText("Código: ");
+
+        codigoField.setEnabled(false);
+
+        funcionarioComboBox.setToolTipText("");
+
+        hotelComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hotelComboBoxActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout dadosPanelLayout = new javax.swing.GroupLayout(dadosPanel);
+        dadosPanel.setLayout(dadosPanelLayout);
+        dadosPanelLayout.setHorizontalGroup(
+            dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dadosPanelLayout.createSequentialGroup()
+                .addGap(1, 1, 1)
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(transporteLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(hotelLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cepLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(funcionarioLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(voltaLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(valorLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(idaLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(codigoLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, dadosPanelLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(cancelarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(salvarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(valorField, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(idaField, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(voltaField, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(codigoField, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(funcionarioComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cepComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(hotelComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(transporteComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        dadosPanelLayout.setVerticalGroup(
+            dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dadosPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(codigoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(codigoLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(valorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(valorLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(idaField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(idaLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(voltaField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(voltaLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(funcionarioLabel)
+                    .addComponent(funcionarioComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cepComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cepLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(hotelComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(hotelLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(transporteComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(transporteLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cancelarButton, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                    .addComponent(salvarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        dadosTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Valor", "Dt. Ida", "Dt. Volta", "Funcionário", "CEP", "Hotel", "Transporte"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(dadosTable);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(menuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(dadosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(dadosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(menuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void cadastrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarButtonActionPerformed
+        
+        dadosPanel.setVisible(true);
+        limparDados();
+        codigoField.setText("0");
+        
+    }//GEN-LAST:event_cadastrarButtonActionPerformed
+
+    private void salvarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarButtonActionPerformed
+        
+        int codigo = Integer.parseInt(codigoField.getText());
+        String valor = valorField.getText();
+        String ida = idaField.getText();
+        String volta = voltaField.getText();
+        this.controlador.buscaFuncionarioCodigo(Integer.parseInt(funcionarioComboBox.getItemAt(funcionarioComboBox.getSelectedIndex())));
+        this.controlador.buscarLocalCEP(Integer.parseInt(cepComboBox.getItemAt(cepComboBox.getSelectedIndex())));
+        this.controlador.buscarHotelCodigo(Integer.parseInt(hotelComboBox.getItemAt(hotelComboBox.getSelectedIndex())));
+        this.controlador.buscarTransporteCodigo(Integer.parseInt(transporteComboBox.getItemAt(transporteComboBox.getSelectedIndex())));
+        
+        
+        
+        if(!((valor.equals("")) || (ida.equals("")) || (volta.equals(""))))
+        {
+            try {
+                this.controlador.salvar(codigo, Double.parseDouble(valor), ida, volta, 
+                    this.controlador.getFuncionario(),
+                    this.controlador.getLocal(),
+                    this.controlador.getHotel(), 
+                    this.controlador.getTransporte());
+                JOptionPane.showMessageDialog(rootPane, "Plano Salvo com sucesso!");
+                dadosPanel.setVisible(false);
+                limparDados();
+                atualizarTabela();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(rootPane, "Campos com '*' são obrigatórios!");
+        }
+        
+    }//GEN-LAST:event_salvarButtonActionPerformed
+
+    private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
+       
+        dadosPanel.setVisible(false);
+        limparDados();
+        
+    }//GEN-LAST:event_cancelarButtonActionPerformed
+
+    private void sairButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairButtonActionPerformed
+        
+        this.dispose();
+        
+    }//GEN-LAST:event_sairButtonActionPerformed
+
+    private void listarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarButtonActionPerformed
+        atualizarTabela();
+       
+        
+    }//GEN-LAST:event_listarButtonActionPerformed
+
+    private void alterarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarButtonActionPerformed
+        
+        DefaultTableModel modelo = (DefaultTableModel)dadosTable.getModel();
+        int selectedRow = dadosTable.getSelectedRow();
+        
+        if(selectedRow > -1)
+        {
+            limparDados();
+            
+            codigoField.setText(modelo.getValueAt(selectedRow, 0).toString());
+            valorField.setText(modelo.getValueAt(selectedRow, 1).toString());
+            idaField.setText(modelo.getValueAt(selectedRow, 2).toString());
+            voltaField.setText(modelo.getValueAt(selectedRow, 3).toString());
+            
+            for(int i = 0; i < funcionarioComboBox.getItemCount(); i++){
+                if(funcionarioComboBox.getItemAt(i) == modelo.getValueAt(selectedRow,4).toString()){
+                    funcionarioComboBox.setSelectedIndex(i);
+                } 
             }
             
-            if(dataVolta.equals("")){
-                System.out.println("Data de Volta: ");
-                dataVolta = s.nextLine();
+            for(int i = 0; i < cepComboBox.getItemCount(); i++){
+                if(cepComboBox.getItemAt(i) == modelo.getValueAt(selectedRow,5).toString()){
+                    cepComboBox.setSelectedIndex(i);
+                }
+            }
+                
+            for(int i = 0; i < hotelComboBox.getItemCount(); i++){
+                if(hotelComboBox.getItemAt(i) == modelo.getValueAt(selectedRow,6).toString()){
+                    hotelComboBox.setSelectedIndex(i);
+                }
+            }
+                    
+            for(int i = 0; i < transporteComboBox.getItemCount(); i++){
+                if(transporteComboBox.getItemAt(i) == modelo.getValueAt(selectedRow,7).toString()){
+                    transporteComboBox.setSelectedIndex(i);
+                }
             }
             
-            if(codigoFuncionario <= 0){
-                System.out.println("Código do Funcionário: ");
-                codigoFuncionario = Integer.parseInt(s.nextLine());
-                
-                this.controlador.buscaFuncionarioCodigo(codigoFuncionario);
-                
-                if(this.controlador.getFuncionario() == null){
-                    System.out.println("Este código de funcionário não existe. Tente outro");
-                    
-                    codigoFuncionario = 0;
-                }
-            }
-
-            if(cepLocal <= 0){
-                System.out.println("CEP do Local: ");
-                cepLocal = Integer.parseInt(s.nextLine());
-                
-                this.controlador.buscarLocalCEP(cepLocal);
-                
-                if(this.controlador.getLocal() == null){
-                    System.out.println("Este código de local não existe. Tente outro");
-                    
-                    cepLocal = 0;
-                }
-            }
-
-            if(codigoHotel <= 0){
-                System.out.println("Código do Hotel: ");
-                codigoHotel = Integer.parseInt(s.nextLine());
-                
-                this.controlador.buscarHotelCodigo(codigoHotel);
-                
-                if(this.controlador.getHotel() == null){
-                    System.out.println("Este código de hotel não existe. Tente outro: ");
-                    
-                    codigoHotel = 0;
-                }
-            }
-
-            if(codigoTransporte <= 0){
-                System.out.println("Código do Transporte: ");
-                codigoTransporte = Integer.parseInt(s.nextLine());  
-                
-                this.controlador.buscarTransporteCodigo(codigoTransporte);
-                
-                if(this.controlador.getTransporte() == null){
-                    System.out.println("Este código de transporte não existe. Tente outro: ");
-                    
-                    codigoTransporte = 0;
-                }
-            }
-        }while((valor == 0) || (dataIda.equals("")) || (dataVolta.equals("")) 
-                || (codigoFuncionario <= 0) || (cepLocal <= 0) || (codigoHotel <= 0) 
-                || (codigoTransporte <= 0));
+            dadosPanel.setVisible(true);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(rootPane, "Selecione um plano para alterar!");
+        }
         
+        
+    }//GEN-LAST:event_alterarButtonActionPerformed
+
+    private void excluirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirButtonActionPerformed
+        
+        DefaultTableModel modelo = (DefaultTableModel)dadosTable.getModel();
+        int selectedRow = dadosTable.getSelectedRow();
+        
+        if(selectedRow > -1)
+        {
+            try {
+                this.controlador.excluir(Integer.parseInt(modelo.getValueAt(selectedRow, 0).toString()));
+                JOptionPane.showMessageDialog(rootPane, "Plano excluido com sucesso!");
+                atualizarTabela();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, e.getMessage());
+            }
+        }
+        else
+        {   
+            JOptionPane.showMessageDialog(rootPane, "Selecione um plano para excluir!");
+        }
+        
+    }//GEN-LAST:event_excluirButtonActionPerformed
+
+    private void hotelComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hotelComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_hotelComboBoxActionPerformed
+
+    
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
         try {
-            this.controlador.salvar(0, valor, dataIda, dataVolta, 
-                    this.controlador.getFuncionario(), this.controlador.getLocal(), 
-                    this.controlador.getHotel(), this.controlador.getTransporte());
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    /**
-     * Método alterar:
-     *
-     * Altera alguma informacao do Plano informado atraves do codigo e envia
-     * todos os atributos para o controlador novamente
-     */
-    private void altera() {
-
-        Scanner s = new Scanner(System.in);
-
-        int codigo;
-
-        System.out.println("Insira o código do plano a ser alterado: ");
-        codigo = Integer.parseInt(s.nextLine());
-        
-        this.controlador.buscar(codigo);
-        
-        if(this.controlador.getPlano() == null){
-            System.out.println("\nNão existe nenhum plano com esse código");
-        }
-        else {
-            SimpleDateFormat formatacao = new SimpleDateFormat("dd/MM/yyyy");
-            
-            System.out.println("Código: "+ this.controlador.getPlano().getCodigo()+
-            "\nValor: "+ this.controlador.getPlano().getValor()+
-            "\nData de ida: "+ formatacao.format(this.controlador.getPlano().getDataIda().getTime())+
-            "\nData de volta: "+ formatacao.format(this.controlador.getPlano().getDataVolta().getTime())+
-            "\n\nFuncionário"+
-            "\nCódigo do funcionário: "+ this.controlador.getPlano().getFuncionario().getCodigo()+
-            "\nNome do funcionário: "+ this.controlador.getPlano().getFuncionario().getNome()+
-            "\n\nLocal Destino"+
-            "\nCódigo do local: "+ this.controlador.getPlano().getLocal().getCodigo()+
-            "\nCEP: "+ this.controlador.getPlano().getLocal().getCepDestino()+
-            "\nPais: "+ this.controlador.getPlano().getLocal().getPaisDestino()+
-            "\nEstado: "+ this.controlador.getPlano().getLocal().getEstadoDestino()+
-            "\nCidade: "+ this.controlador.getPlano().getLocal().getCidadeDestino()+
-            "\n\nHotel: "+
-            "\nCódigo do hotel: "+ this.controlador.getPlano().getHotel().getCodigo()+
-            "\nNome do hotel: "+ this.controlador.getPlano().getHotel().getNomeHotel()+
-            " ("+ this.controlador.getPlano().getHotel().getClassificacao()+ ")"+
-            "\n\nTransporte"+
-            "\nCódigo do transporte: "+ this.controlador.getPlano().getTransporte().getCodigo()+
-            "\nVeículo: "+ this.controlador.getPlano().getTransporte().getVeiculo());
-            
-            System.out.println("\nDeseja realmente alterar esse plano? (0 - Não | 1 - Sim): ");
-            int op = Integer.parseInt(s.nextLine());
-            
-            if (op == 1) {
-                double valor = 0;
-                String dataIda = "";
-                String dataVolta = "";
-                int codigoFuncionario = 0;
-                int cepLocal = 0;
-                int codigoHotel = 0;
-                int codigoTransporte = 0;
-
-                do {
-                    if (valor == 0) {
-                        System.out.println("Valor do Plano: ");
-                        valor = Double.parseDouble(s.nextLine());
-                    }
-
-                    if (dataIda.equals("")) {
-                        System.out.println("Data de Ida: ");
-                        dataIda = s.nextLine();
-                    }
-
-                    if (dataVolta.equals("")) {
-                        System.out.println("Data de Volta: ");
-                        dataVolta = s.nextLine();
-                    }
-
-                    if (codigoFuncionario <= 0) {
-                        System.out.println("Código do Funcionário: ");
-                        codigoFuncionario = Integer.parseInt(s.nextLine());
-
-                        this.controlador.buscaFuncionarioCodigo(codigoHotel);
-
-                        if (this.controlador.getFuncionario() == null) {
-                            System.out.println("Este código de funcionário não existe. Tente outro");
-
-                            codigoFuncionario = 0;
-                        }
-                    }
-
-                    if (cepLocal <= 0) {
-                        System.out.println("Código do Local: ");
-                        cepLocal = Integer.parseInt(s.nextLine());
-
-                        this.controlador.buscarLocalCEP(cepLocal);
-
-                        if (this.controlador.getLocal() == null) {
-                            System.out.println("Este código de local não existe. Tente outro");
-
-                            cepLocal = 0;
-                        }
-                    }
-
-                    if (codigoHotel <= 0) {
-                        System.out.println("Código do Hotel: ");
-                        codigoHotel = Integer.parseInt(s.nextLine());
-
-                        this.controlador.buscarHotelCodigo(codigoHotel);
-
-                        if (this.controlador.getHotel() == null) {
-                            System.out.println("Este código de hotel não existe. Tente outro: ");
-
-                            codigoHotel = 0;
-                        }
-                    }
-
-                    if (codigoTransporte <= 0) {
-                        System.out.println("Código do Transporte: ");
-                        codigoTransporte = Integer.parseInt(s.nextLine());
-
-                        this.controlador.buscarTransporteCodigo(codigoTransporte);
-
-                        if (this.controlador.getTransporte() == null) {
-                            System.out.println("Este código de transporte não existe. Tente outro: ");
-
-                            codigoTransporte = 0;
-                        }
-                    }
-                } while ((valor == 0) || (dataIda.equals("")) || (dataVolta.equals(""))
-                        || (codigoFuncionario <= 0) || (cepLocal<= 0) || (codigoHotel <= 0)
-                        || (codigoTransporte <= 0));
-
-                try {
-                    this.controlador.salvar(this.controlador.getPlano().getCodigo(), 
-                            valor, dataIda, dataVolta, this.controlador.getPlano().getFuncionario(),
-                            this.controlador.getPlano().getLocal(), 
-                            this.controlador.getPlano().getHotel(), 
-                            this.controlador.getPlano().getTransporte());
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
                 }
             }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(PlanoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(PlanoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(PlanoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(PlanoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new PlanoView().setVisible(true);
+            }
+        });
     }
 
-    /**
-     * Método listar:
-     *
-     * Lista todos os Planos que foram cadastrados chamando o controlador
-     */
-    private void lista() {
-        SimpleDateFormat formatacao = new SimpleDateFormat("dd/MM/yyyy");
+    private void limparDados(){
+        valorField.setText("");
+        idaField.setText("");
+        voltaField.setText("");
+        funcionarioComboBox.setSelectedIndex(0);
+        cepComboBox.setSelectedIndex(0);
+        hotelComboBox.setSelectedIndex(0);
+        transporteComboBox.setSelectedIndex(0);
+    }
+    
+    private void atualizarTabela(){
+        ((DefaultTableModel) dadosTable.getModel()).setRowCount(0);
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         this.controlador.buscarTodos();
-      
-        for(int i = 0; i < this.controlador.getListaDePlanos().size(); i++){
-            System.out.print("\n--------------------------------------------\n");
-            
-            System.out.println("Código: "+ this.controlador.getListaDePlanos().get(i).getCodigo()+
-            "\nValor: "+ this.controlador.getListaDePlanos().get(i).getValor()+
-            "\nData de ida: "+ formatacao.format(this.controlador.getListaDePlanos().get(i).getDataIda().getTime())+
-            "\nData de volta: "+ formatacao.format(this.controlador.getListaDePlanos().get(i).getDataVolta().getTime())+
-            "\n\nFuncionário"+
-            "\nCódigo do funcionário: "+ this.controlador.getListaDePlanos().get(i).getFuncionario().getCodigo()+
-            "\nNome do funcionário: "+ this.controlador.getListaDePlanos().get(i).getFuncionario().getNome()+
-            "\n\nLocal Destino"+
-            "\nCódigo do local: "+ this.controlador.getListaDePlanos().get(i).getLocal().getCodigo()+
-            "\nCEP: "+ this.controlador.getListaDePlanos().get(i).getLocal().getCepDestino()+
-            "\nPais: "+ this.controlador.getListaDePlanos().get(i).getLocal().getPaisDestino()+
-            "\nEstado: "+ this.controlador.getListaDePlanos().get(i).getLocal().getEstadoDestino()+
-            "\nCidade: "+ this.controlador.getListaDePlanos().get(i).getLocal().getCidadeDestino()+
-            "\n\nHotel: "+
-            "\nCódigo do hotel: "+ this.controlador.getListaDePlanos().get(i).getHotel().getCodigo()+
-            "\nNome do hotel: "+ this.controlador.getListaDePlanos().get(i).getHotel().getNomeHotel()+
-            " ("+ this.controlador.getListaDePlanos().get(i).getHotel().getClassificacao()+ ")"+
-            "\n\nTransporte"+
-            "\nCódigo do transporte: "+ this.controlador.getListaDePlanos().get(i).getTransporte().getCodigo()+
-            "\nVeículo: "+ this.controlador.getListaDePlanos().get(i).getTransporte().getVeiculo());
-        }
-    }
-
-    /**
-     * Método excluir:
-     *
-     * Excluir o Plano informado pelo codigo chamando o controlador
-     */
-    private void excluir() {
-
-        Scanner s = new Scanner(System.in);
-
-        int codigo, opc;
-
-        System.out.println("Insira o código do plano a ser excluido: ");
-        codigo = Integer.parseInt(s.nextLine());
-
-        this.controlador.buscar(codigo);
         
-        if(this.controlador.getPlano() == null){
-            System.out.println("\nNão existe nenhum plano com esse código");
-        }
-        else {
-            SimpleDateFormat formatacao = new SimpleDateFormat("dd/MM/yyyy");
+        for(int i=0; i<this.controlador.getListaDePlanos().size(); i++){
             
-            System.out.println("Código: "+ this.controlador.getPlano().getCodigo()+
-            "\nValor: "+ this.controlador.getPlano().getValor()+
-            "\nData de ida: "+ formatacao.format(this.controlador.getPlano().getDataIda().getTime())+
-            "\nData de volta: "+ formatacao.format(this.controlador.getPlano().getDataVolta().getTime())+
-            "\n\nFuncionário"+
-            "\nCódigo do funcionário: "+ this.controlador.getPlano().getFuncionario().getCodigo()+
-            "\nNome do funcionário: "+ this.controlador.getPlano().getFuncionario().getNome()+
-            "\n\nLocal Destino"+
-            "\nCódigo do local: "+ this.controlador.getPlano().getLocal().getCodigo()+
-            "\nCEP do local: "+ this.controlador.getPlano().getLocal().getCepDestino()+
-            "\nPais: "+ this.controlador.getPlano().getLocal().getPaisDestino()+
-            "\nEstado: "+ this.controlador.getPlano().getLocal().getEstadoDestino()+
-            "\nCidade: "+ this.controlador.getPlano().getLocal().getCidadeDestino()+
-            "\n\nHotel: "+
-            "\nCódigo do hotel: "+ this.controlador.getPlano().getHotel().getCodigo()+
-            "\nNome do hotel: "+ this.controlador.getPlano().getHotel().getNomeHotel()+
-            " ("+ this.controlador.getPlano().getHotel().getClassificacao()+ ")"+
-            "\n\nTransporte"+
-            "\nCódigo do transporte: "+ this.controlador.getPlano().getTransporte().getCodigo()+
-            "\nVeículo: "+ this.controlador.getPlano().getTransporte().getVeiculo());
+            ((DefaultTableModel) dadosTable.getModel()).addRow(new Object[]{
+                this.controlador.getListaDePlanos().get(i).getCodigo(),
+                this.controlador.getListaDePlanos().get(i).getValor(),
+                sdf.format(this.controlador.getListaDePlanos().get(i).getDataIda().getTime()),
+                sdf.format(this.controlador.getListaDePlanos().get(i).getDataVolta().getTime()),
+                this.controlador.getListaDePlanos().get(i).getFuncionario().getCodigo(),
+                this.controlador.getListaDePlanos().get(i).getLocal().getCepDestino(),
+                this.controlador.getListaDePlanos().get(i).getHotel().getCodigo(),
+                this.controlador.getListaDePlanos().get(i).getTransporte().getCodigo()
+                });
             
-            System.out.println("\nDeseja realmente excluir esse plano? (0 - Não | 1 - Sim): ");
-            int op = Integer.parseInt(s.nextLine());
-            
-            try {
-                this.controlador.excluir(codigo);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
         }
     }
+    
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton alterarButton;
+    private javax.swing.JButton cadastrarButton;
+    private javax.swing.JButton cancelarButton;
+    private javax.swing.JComboBox<String> cepComboBox;
+    private javax.swing.JLabel cepLabel;
+    private javax.swing.JTextField codigoField;
+    private javax.swing.JLabel codigoLabel;
+    private javax.swing.JPanel dadosPanel;
+    private javax.swing.JTable dadosTable;
+    private javax.swing.JButton excluirButton;
+    private javax.swing.JComboBox<String> funcionarioComboBox;
+    private javax.swing.JLabel funcionarioLabel;
+    private javax.swing.JComboBox<String> hotelComboBox;
+    private javax.swing.JLabel hotelLabel;
+    private javax.swing.JTextField idaField;
+    private javax.swing.JLabel idaLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton listarButton;
+    private javax.swing.JPanel menuPanel;
+    private javax.swing.JButton sairButton;
+    private javax.swing.JButton salvarButton;
+    private javax.swing.JComboBox<String> transporteComboBox;
+    private javax.swing.JLabel transporteLabel;
+    private javax.swing.JTextField valorField;
+    private javax.swing.JLabel valorLabel;
+    private javax.swing.JTextField voltaField;
+    private javax.swing.JLabel voltaLabel;
+    // End of variables declaration//GEN-END:variables
 }

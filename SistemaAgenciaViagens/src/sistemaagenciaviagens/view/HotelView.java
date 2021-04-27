@@ -1,260 +1,495 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package sistemaagenciaviagens.view;
 
-import java.util.Scanner;
-
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import sistemaagenciaviagens.controller.HotelController;
 
-public class HotelView {
+/**
+ *
+ * @author Caio
+ */
+public class HotelView extends javax.swing.JFrame {
 
     private HotelController controlador;
-
-    /**
-    * Método Construtor de HotelView: 
-    * 
-    * Chama o Menu de Hotel e instancia um controlador
-    */
+    
     public HotelView() {
-	this.controlador = new HotelController();
-        
-        this.menu();
-    }
-
-    /**
-    * Menu de Hotel: 
-    * 
-    * Será utilizado para escolher as opcoes de cadastrar, alterar, listar ou 
-    * excluir um Hotel
-    */
-    private void menu() {
-        
-        Scanner s = new Scanner(System.in);
-        
-        int opc = 0;
-        
-        do {
-
-            System.out.println("\n\n-------MENU DE HOTEL-------");
-            System.out.println("1 - Cadastrar Novo Hotel");
-            System.out.println("2 - Alterar Hotel");
-            System.out.println("3 - Listar Todos os Hotéis");
-            System.out.println("4 - Excluir Hotel");
-            System.out.println("0 - Voltar");
-
-            System.out.print("\nSelecionar opção: ");
-            opc = Integer.parseInt(s.nextLine());
-
-            switch (opc) {
-                case 0: {
-                    break;
-                }
-                case 1: {
-                    this.novo();
-                    break;
-                }
-                case 2: {
-                    this.altera();
-                    break;
-                }
-                case 3: {
-                    this.lista();
-                    break;
-                }
-                case 4: {
-                    this.excluir();
-                    break;
-                }
-
-            }
-        } while (opc != 0);
-
-    }
-
-    /**
-    * Método novo: 
-    * 
-    * Cria um novo Hotel e envia todos os atributos para o controlador
-    */
-    private void novo() {
-        
-        Scanner s = new Scanner(System.in);
-        
-        String nomeHotel = "";
-        String classificacao = "";
-        String bairro = "";
-        String rua = "";
-        String numero = "";
-
-        do {
-            if(nomeHotel.equals("")){
-                System.out.println("Nome do hotel: ");
-                nomeHotel = s.nextLine();
-            }
-            
-            if(classificacao.equals("")){
-                System.out.println("Classificação: ");
-                classificacao = s.nextLine();
-            }
-
-            if(bairro.equals("")){
-                System.out.println("Bairro: ");
-                bairro = s.nextLine();
-            }
-
-            if(rua.equals("")){
-                System.out.println("Rua: ");
-                rua = s.nextLine();
-            }
-
-            if(numero.equals("")){
-                System.out.println("Número: ");
-                numero = s.nextLine();
-            }
-        } while((numero.equals("")) || (classificacao.equals("")) || (bairro.equals("")) || 
-                (rua.equals("")) || (numero.equals("")));
-
-        try{
-            this.controlador.salvar(0, nomeHotel, classificacao, bairro, rua, numero);
-        }catch(Exception ex){
-            System.out.println(ex.getMessage());
-        }
-        
-    }
-
-    /**
-    * Método alterar: 
-    * 
-    * Altera alguma informacao do Hotel informado atraves do codigo e envia 
-    * todos os atributos para o controlador novamente
-    */
-    private void altera() {
-        
-        Scanner s = new Scanner(System.in);
-        
-        int codigo;
-
-        System.out.println("Insira o código do hotel a ser alterado: ");
-        codigo = Integer.parseInt(s.nextLine());
-
-        this.controlador.buscar(codigo);
-        
-        if(this.controlador.getHotel() == null){
-            System.out.println("Não existe nenhum hotel com esse código!\n");
-        }
-        else {
-            System.out.println("Código: "+ this.controlador.getHotel().getCodigo()+
-            "\nNome do hotel: "+ this.controlador.getHotel().getNomeHotel()+
-            "\nClassificação: "+ this.controlador.getHotel().getClassificacao()+
-            "\nBairro: "+ this.controlador.getHotel().getBairro()+
-            "\nRua: "+ this.controlador.getHotel().getRua()+
-            "\nNúmero: "+ this.controlador.getHotel().getNumero());
-            
-            System.out.println("Deseja realmente alterar esse hotel? (0 - Não | 1 - Sim): ");
-            int op = Integer.parseInt(s.nextLine());
-            
-            if (op == 1) {
-                String nomeHotel = "";
-                String classificacao = "";
-                String bairro = "";
-                String rua = "";
-                String numero = "";
-
-                do {
-                    if (nomeHotel.equals("")) {
-                        System.out.println("Nome do hotel: ");
-                        nomeHotel = s.nextLine();
-                    }
-
-                    if (classificacao.equals("")) {
-                        System.out.println("Classificação: ");
-                        classificacao = s.nextLine();
-                    }
-
-                    if (bairro.equals("")) {
-                        System.out.println("Bairro: ");
-                        bairro = s.nextLine();
-                    }
-
-                    if (rua.equals("")) {
-                        System.out.println("Rua: ");
-                        rua = s.nextLine();
-                    }
-
-                    if (numero.equals("")) {
-                        System.out.println("Número: ");
-                        numero = s.nextLine();
-                    }
-                } while ((numero.equals("")) || (classificacao.equals("")) || (bairro.equals(""))
-                        || (rua.equals("")) || (numero.equals("")));
-                
-                try {
-                    this.controlador.salvar(this.controlador.getHotel().getCodigo(),
-                            nomeHotel, classificacao, bairro, rua, numero);
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
-                }
-            }
-        }
-        
-    }
-
-    /**
-    * Método listar: 
-    * 
-    * Lista todos os Hoteis que foram cadastrados chamando o controlador
-    */
-    private void lista() {
-        this.controlador.buscaTodos();
-      
-        for(int i = 0; i < this.controlador.getListaHotel().size(); i++){          
-            System.out.print("\n--------------------------------------------\n");
-            
-            System.out.println("Código: "+ this.controlador.getListaHotel().get(i).getCodigo()+
-            "\nNome do hotel: "+ this.controlador.getListaHotel().get(i).getNomeHotel()+
-            "\nClassificação: "+ this.controlador.getListaHotel().get(i).getClassificacao()+
-            "\nBairro: "+ this.controlador.getListaHotel().get(i).getBairro()+
-            "\nRua: "+ this.controlador.getListaHotel().get(i).getRua()+
-            "\nNúmero: "+ this.controlador.getListaHotel().get(i).getNumero());
-        }
+        this.controlador = new HotelController();
+        initComponents();
+        dadosPanel.setVisible(false);
     }
     
     /**
-    * Método excluir: 
-    * 
-    * Excluir o Hotel informado pelo codigo chamando o controlador
-    */
-    private void excluir() {
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-        Scanner s = new Scanner(System.in);
+        jLabel1 = new javax.swing.JLabel();
+        menuPanel = new javax.swing.JPanel();
+        cadastrarButton = new javax.swing.JButton();
+        alterarButton = new javax.swing.JButton();
+        listarButton = new javax.swing.JButton();
+        excluirButton = new javax.swing.JButton();
+        sairButton = new javax.swing.JButton();
+        dadosPanel = new javax.swing.JPanel();
+        nomeHotelLabel = new javax.swing.JLabel();
+        classificacaoLabel = new javax.swing.JLabel();
+        bairroLabel = new javax.swing.JLabel();
+        ruaLabel = new javax.swing.JLabel();
+        nomeHotelField = new javax.swing.JTextField();
+        classificacaoField = new javax.swing.JTextField();
+        bairroField = new javax.swing.JTextField();
+        ruaField = new javax.swing.JTextField();
+        salvarButton = new javax.swing.JButton();
+        cancelarButton = new javax.swing.JButton();
+        codigoLabel = new javax.swing.JLabel();
+        codigoField = new javax.swing.JTextField();
+        numeroField = new javax.swing.JTextField();
+        numeroLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        dadosTable = new javax.swing.JTable();
 
-        int codigo, opc;
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        System.out.println("Insira o código do local a ser excluido: ");
-        codigo = Integer.parseInt(s.nextLine());
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Hoteis");
 
-        this.controlador.buscar(codigo);
+        menuPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        if (this.controlador.getHotel() == null) {
-            System.out.println("Não existe nenhum hotel com esse código!\n");
-        }
-        else {
-            System.out.println("Código: " + this.controlador.getHotel().getCodigo()
-                    + "\nNome do hotel: " + this.controlador.getHotel().getNomeHotel()
-                    + "\nClassificação: " + this.controlador.getHotel().getClassificacao()
-                    + "\nBairro: " + this.controlador.getHotel().getBairro()
-                    + "\nRua: " + this.controlador.getHotel().getRua()
-                    + "\nNúmero: " + this.controlador.getHotel().getNumero());
+        cadastrarButton.setText("Cadastrar Novo Hotel");
+        cadastrarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadastrarButtonActionPerformed(evt);
+            }
+        });
 
-            System.out.println("Deseja realmente alterar esse hotel? (0 - Não | 1 - Sim): ");
-            int op = Integer.parseInt(s.nextLine());
-            
-            if(op == 1){
-                try {
-                    this.controlador.excluir(codigo);
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
+        alterarButton.setText("Alterar Hotel");
+        alterarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                alterarButtonActionPerformed(evt);
+            }
+        });
+
+        listarButton.setText("Listar Todos os Hoteis");
+        listarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listarButtonActionPerformed(evt);
+            }
+        });
+
+        excluirButton.setText("Excluir Hotel");
+        excluirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                excluirButtonActionPerformed(evt);
+            }
+        });
+
+        sairButton.setText("Sair");
+        sairButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sairButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
+        menuPanel.setLayout(menuPanelLayout);
+        menuPanelLayout.setHorizontalGroup(
+            menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cadastrarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(alterarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(listarButton, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+                    .addComponent(excluirButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(sairButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        menuPanelLayout.setVerticalGroup(
+            menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cadastrarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(alterarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(listarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(excluirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(sairButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        dadosPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        nomeHotelLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        nomeHotelLabel.setText("*Nome: ");
+
+        classificacaoLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        classificacaoLabel.setText("*Classificação: ");
+
+        bairroLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        bairroLabel.setText("*Bairro: ");
+
+        ruaLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        ruaLabel.setText("*Rua: ");
+
+        salvarButton.setText("Salvar");
+        salvarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvarButtonActionPerformed(evt);
+            }
+        });
+
+        cancelarButton.setText("Cancelar");
+        cancelarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarButtonActionPerformed(evt);
+            }
+        });
+
+        codigoLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        codigoLabel.setText("Código: ");
+
+        codigoField.setEnabled(false);
+
+        numeroLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        numeroLabel.setText("*Numero: ");
+
+        javax.swing.GroupLayout dadosPanelLayout = new javax.swing.GroupLayout(dadosPanel);
+        dadosPanel.setLayout(dadosPanelLayout);
+        dadosPanelLayout.setHorizontalGroup(
+            dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dadosPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dadosPanelLayout.createSequentialGroup()
+                        .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(ruaLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bairroLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(nomeHotelLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(classificacaoLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(codigoLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(numeroLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nomeHotelField)
+                            .addComponent(classificacaoField)
+                            .addComponent(bairroField)
+                            .addComponent(ruaField)
+                            .addComponent(codigoField)
+                            .addComponent(numeroField)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dadosPanelLayout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addComponent(cancelarButton, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(salvarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        dadosPanelLayout.setVerticalGroup(
+            dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dadosPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(codigoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(codigoLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nomeHotelField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nomeHotelLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(classificacaoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(classificacaoLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bairroField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bairroLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ruaField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ruaLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(numeroField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(numeroLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(dadosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(salvarButton, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                    .addComponent(cancelarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        dadosTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Nome", "Classificação", "Bairro", "Rua", "Numero"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(dadosTable);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(menuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(dadosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dadosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void cadastrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarButtonActionPerformed
+        
+        dadosPanel.setVisible(true);
+        limparDados();
+        codigoField.setText("0");
+        
+    }//GEN-LAST:event_cadastrarButtonActionPerformed
+
+    private void salvarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarButtonActionPerformed
+        
+        int codigo = Integer.parseInt(codigoField.getText());
+        
+        String nomeHotel = nomeHotelField.getText();
+        String classificacao = classificacaoField.getText();
+        String bairro = bairroField.getText();
+        String rua = ruaField.getText();
+        String numero = numeroField.getText();
+        
+        if(!((nomeHotel.equals("")) || (classificacao.equals("")) || (bairro.equals("")) || (rua.equals("")) || (numero.equals(""))))
+        {
+            try {
+                this.controlador.salvar(codigo, nomeHotel, classificacao, bairro, rua, numero);
+                JOptionPane.showMessageDialog(rootPane, "Hotel Salvo com sucesso!");
+                dadosPanel.setVisible(false);
+                limparDados();
+                atualizarTabela();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(rootPane, ex.getMessage());
             }
         }
+        else
+        {
+            JOptionPane.showMessageDialog(rootPane, "Campos com '*' são obrigatórios!");
+        }
+        
+    }//GEN-LAST:event_salvarButtonActionPerformed
+
+    private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
+       
+        dadosPanel.setVisible(false);
+        limparDados();
+        
+    }//GEN-LAST:event_cancelarButtonActionPerformed
+
+    private void sairButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairButtonActionPerformed
+        
+        this.dispose();
+        
+    }//GEN-LAST:event_sairButtonActionPerformed
+
+    private void listarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarButtonActionPerformed
+        atualizarTabela();
+    }//GEN-LAST:event_listarButtonActionPerformed
+
+    private void alterarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarButtonActionPerformed
+        
+        DefaultTableModel modelo = (DefaultTableModel)dadosTable.getModel();
+        int selectedRow = dadosTable.getSelectedRow();
+        
+        if(selectedRow > -1)
+        {
+            limparDados();
+            
+            codigoField.setText(modelo.getValueAt(selectedRow, 0).toString());
+            nomeHotelField.setText(modelo.getValueAt(selectedRow, 1).toString());
+            classificacaoField.setText(modelo.getValueAt(selectedRow, 2).toString());
+            bairroField.setText(modelo.getValueAt(selectedRow, 3).toString());
+            ruaField.setText(modelo.getValueAt(selectedRow, 4).toString());
+            numeroField.setText(modelo.getValueAt(selectedRow, 5).toString());
+            
+            dadosPanel.setVisible(true);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(rootPane, "Selecione um local para alterar!");
+        }
+        
+        
+    }//GEN-LAST:event_alterarButtonActionPerformed
+
+    private void excluirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirButtonActionPerformed
+        
+        DefaultTableModel modelo = (DefaultTableModel)dadosTable.getModel();
+        int selectedRow = dadosTable.getSelectedRow();
+        
+        if(selectedRow > -1)
+        {
+            try {
+                this.controlador.excluir(Integer.parseInt(modelo.getValueAt(selectedRow, 0).toString()));
+                JOptionPane.showMessageDialog(rootPane, "Hotel excluido com sucesso!");
+                atualizarTabela();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, e.getMessage());
+            }
+        }
+        else
+        {   
+            JOptionPane.showMessageDialog(rootPane, "Selecione um Hotel para excluir!");
+        }
+        
+    }//GEN-LAST:event_excluirButtonActionPerformed
+
+    
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(HotelView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(HotelView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(HotelView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(HotelView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new HotelView().setVisible(true);
+            }
+        });
     }
-   
+
+    private void limparDados(){
+        nomeHotelField.setText("");
+        classificacaoField.setText("");
+        bairroField.setText("");
+        ruaField.setText("");
+        numeroField.setText("");
+    }
+    
+    private void atualizarTabela(){
+        ((DefaultTableModel) dadosTable.getModel()).setRowCount(0);
+        
+        this.controlador.buscaTodos();
+        
+        for(int i=0; i<this.controlador.getListaHotel().size(); i++){
+            
+            ((DefaultTableModel) dadosTable.getModel()).addRow(new Object[]{
+                this.controlador.getListaHotel().get(i).getCodigo(),
+                this.controlador.getListaHotel().get(i).getNomeHotel(),
+                this.controlador.getListaHotel().get(i).getClassificacao(),
+                this.controlador.getListaHotel().get(i).getBairro(),
+                this.controlador.getListaHotel().get(i).getRua(),
+                this.controlador.getListaHotel().get(i).getNumero()
+            });
+            
+        }
+    }
+    
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton alterarButton;
+    private javax.swing.JTextField bairroField;
+    private javax.swing.JLabel bairroLabel;
+    private javax.swing.JButton cadastrarButton;
+    private javax.swing.JButton cancelarButton;
+    private javax.swing.JTextField classificacaoField;
+    private javax.swing.JLabel classificacaoLabel;
+    private javax.swing.JTextField codigoField;
+    private javax.swing.JLabel codigoLabel;
+    private javax.swing.JPanel dadosPanel;
+    private javax.swing.JTable dadosTable;
+    private javax.swing.JButton excluirButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton listarButton;
+    private javax.swing.JPanel menuPanel;
+    private javax.swing.JTextField nomeHotelField;
+    private javax.swing.JLabel nomeHotelLabel;
+    private javax.swing.JTextField numeroField;
+    private javax.swing.JLabel numeroLabel;
+    private javax.swing.JTextField ruaField;
+    private javax.swing.JLabel ruaLabel;
+    private javax.swing.JButton sairButton;
+    private javax.swing.JButton salvarButton;
+    // End of variables declaration//GEN-END:variables
 }
